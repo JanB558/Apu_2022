@@ -1,0 +1,179 @@
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> a <- 2 * exp(5)
+> b <- 2 * a
+> max(a, b)
+[1] 593.6526
+> help(sum)
+> a <- 15:25
+> mean(a)
+[1] 20
+> apropos("sum", mode = "function")
+ [1] ".colSums"                ".rowSums"                ".rs.callSummary"         ".rs.summarizeDir"       
+ [5] ".rs.tutorial.onResume"   ".tryResumeInterrupt"     "colSums"                 "contr.sum"              
+ [9] "cumsum"                  "format.summaryDefault"   "marginSums"              "print.summary.table"    
+[13] "print.summary.warnings"  "print.summaryDefault"    "rowsum"                  "rowsum.data.frame"      
+[17] "rowsum.default"          "rowSums"                 "sum"                     "summary"                
+[21] "Summary"                 "summary.aov"             "summary.connection"      "summary.data.frame"     
+[25] "Summary.data.frame"      "summary.Date"            "Summary.Date"            "summary.default"        
+[29] "Summary.difftime"        "summary.factor"          "Summary.factor"          "summary.glm"            
+[33] "summary.lm"              "summary.manova"          "summary.matrix"          "Summary.numeric_version"
+[37] "Summary.ordered"         "summary.POSIXct"         "Summary.POSIXct"         "summary.POSIXlt"        
+[41] "Summary.POSIXlt"         "summary.proc_time"       "summary.srcfile"         "summary.srcref"         
+[45] "summary.stepfun"         "summary.table"           "summary.warnings"        "summaryRprof"           
+> setwd("H:\ATH\Apu\LAB\LAB1\LAB1_R")
+Error: '\A' is an unrecognized escape in character string starting ""H:\A"
+> setwd("H:/ATH/Apu/LAB/LAB1/LAB1_R")
+> a <- "smartfony Samsung"
+> save(a, file = "smartfony")
+> remove(a)
+> a
+Error: object 'a' not found
+> load("smartfony")
+> a
+[1] "smartfony Samsung"
+> install.packages("gridExtra")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Instalowanie pakietu w ‘C:/Users/Janek/Documents/R/win-library/4.1’
+(ponieważ ‘lib’ nie jest określony)
+instalowanie dodatkowych zależności ‘gtable’
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.1/gtable_0.3.0.zip'
+Content type 'application/zip' length 434366 bytes (424 KB)
+downloaded 424 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.1/gridExtra_2.3.zip'
+Content type 'application/zip' length 1109491 bytes (1.1 MB)
+downloaded 1.1 MB
+
+package ‘gtable’ successfully unpacked and MD5 sums checked
+package ‘gridExtra’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Janek\AppData\Local\Temp\RtmpcpAigG\downloaded_packages
+> library(gridExtra)
+> help(package = "gridExtra")
+> grid.table(mtcars[1:10, ])
+> seq(100, 20, 4)
+Error in seq.default(100, 20, 4) : błędny znak w argumencie 'by'
+> seq(100,20,4)
+Error in seq.default(100, 20, 4) : błędny znak w argumencie 'by'
+> c <- seq(20, 100, 4)
+> rev(c)
+ [1] 100  96  92  88  84  80  76  72  68  64  60  56  52  48  44  40  36  32  28  24  20
+> a <- rev(5:9)
+> b <- 11:16
+> d <- c(b, 1)
+> d <- c(b, a)
+> d
+ [1] 11 12 13 14 15 16  9  8  7  6  5
+> nazwa <- c("Xiaomi Poco X3 PRO", "Samsung Galaxy S21", "Samsung Galaxy M12", "Samsung Galaxy M52", "Xiaomi Redmi Note 10", "Nokia G10 Dual Sim", "Xiaomi Redmi 10", "OnePlus 8T", "realme 8", "Xiaomi Redmi Note 10S")
+> wyswietlacz <- c(6.67, 6.2, 6.5, 6.7, 6.5, 6.5, 6.5, 6.55, 6.4, 6.43)
+> pamiec_RAM <- c(8, 8, 4, 6, 4, 3, 4, 8, 4, 6)
+> pamiec_wbudowana <- c(128, 64, 32, 64, 128, 64, 64, 128, 128, 128)
+> aparat_foto <- c(48.0, 12.0, 2.0, 64.0, 2.0, 13.0, 50.0, 2.0, 64.0, 2.0)
+> cena <- c(1399, 2799, 699, 1399, 999, 589, 799, 2099, 999, 1349)
+> liczba_opinii <- c(185, 106, 30, 17, 19, 17, 14, 108, 79, 27)
+> save.image("H:/ATH/Apu/LAB/LAB1/LAB1_R/LAB1_Workspace.RData")
+> smartfony <- data.frame(nazwa, wyswietlacz, pamiec_RAM, pamiec_wbudowana, aparat_foto, cena, liczba_opinii)
+> mean(smartfony$cena)
+[1] 1313
+> save.image("H:/ATH/Apu/LAB/LAB1/LAB1_R/LAB1_Workspace.RData")
+> smartfonybackup <- smartfony
+> nowysmartfon <- data.frame(nazwa ="Alcatel 1S", wyswietlacz = 6.52, pamiec_RAM = 3, pamiec_wbudowana = 32, aparat_foto = 13, cena = 449, liczba_opinii = 9)
+> smartfony <- rbind(smartfony, nowysmartfon)
+> mean(smartfony$cena)
+[1] 1234.455
+> save.image("H:/ATH/Apu/LAB/LAB1/LAB1_R/LAB1_Workspace.RData")
+> ocena <- c(4, 5, 4.5, 5, 5, 3.5, 3, 5, 2, 3)
+> smartfonybackup <- smartfony
+> smartfony <- cbind(smartfony, ocena)
+Error in data.frame(..., check.names = FALSE) : 
+  argumenty sugerują różną liczbę wierszy: 11, 10
+> ocena <- c(4, 5, 4.5, 5, 5, 3.5, 3, 5, 2, 3, 2)
+> smartfony <- cbind(smartfony, ocena)
+> tapply(smartfony$cena, smartfony$ocena, mean)
+   2    3  3.5    4  4.5    5 
+ 724 1074  589 1399  699 1824 
+> smartfonybackup <- smartfony
+> smartfon2 <- data.frame(nazwa ="Samsung Galaxy A32", wyswietlacz = 6.4, pamiec_RAM = 4, pamiec_wbudowana = 128, aparat_foto = 5, cena = 1099, liczba_opinii = 38, ocena = 5)
+> smartfon3 <- data.frame(nazwa ="Xiaomi Poco M4 PRO", wyswietlacz = 6.6, pamiec_RAM = 6, pamiec_wbudowana = 128, aparat_foto = 50, cena = 1199, liczba_opinii = 8, ocena = 6)
+> smartfon4 <- data.frame(nazwa ="realme GT Master", wyswietlacz = 6.43, pamiec_RAM = 8, pamiec_wbudowana = 256, aparat_foto = 64, cena = 1599, liczba_opinii = 147, ocena = 5)
+> smartfon3 <- data.frame(nazwa ="Xiaomi Poco M4 PRO", wyswietlacz = 6.6, pamiec_RAM = 6, pamiec_wbudowana = 128, aparat_foto = 50, cena = 1199, liczba_opinii = 8, ocena = 5)
+> smartfon5 <- data.frame(nazwa ="vivo Y33s", wyswietlacz = 6.58, pamiec_RAM = 8, pamiec_wbudowana = 128, aparat_foto = 50, cena = 999, liczba_opinii = 10, ocena = 5)
+> smartfony <- rbind(smartfony, smartfon2)
+> smartfony <- rbind(smartfony, smartfon3)
+> smartfony <- rbind(smartfony, smartfon4)
+> smartfony <- rbind(smartfony, smartfon5)
+> save.image("H:/ATH/Apu/LAB/LAB1/LAB1_R/LAB1_Workspace.RData")
+> liczebnosc <- table(smartfony$ocena)
+> barplot(liczebnosc)
+> procenty <- liczebnosc / sum(liczebnosc)
+> pie(procenty)
+> library(plotrix)
+Error in library(plotrix) : nie ma pakietu o nazwie ‘plotrix’
+> install.packages("plotrix")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Instalowanie pakietu w ‘C:/Users/Janek/Documents/R/win-library/4.1’
+(ponieważ ‘lib’ nie jest określony)
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.1/plotrix_3.8-2.zip'
+Content type 'application/zip' length 1139092 bytes (1.1 MB)
+downloaded 1.1 MB
+
+package ‘plotrix’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Janek\AppData\Local\Temp\RtmpcpAigG\downloaded_packages
+> library(plotrix)
+> fan.plot(liczebnosc, labels = names(liczebnosc))
+> smartfonybackup <- smartfony
+> grid.table(smartfony)
+> smartfony[, "status_opinii"] <- ifelse(smartfony$liczba_opinii == 0, "nie ma", "mniej niż 50")
+> grid.table(smartfony)
+> smartfony[, "status_opinii"] <- ifelse(smartfony$liczba_opinii <= 50, smartfony$liczba_opinii, "50-100")
+> grid.table(smartfony)
+> smartfony[, "status_opinii"] <- ifelse(smartfony$liczba_opinii == 0, "nie ma", "mniej niż 50")
+> grid.table(smartfony)
+> smartfony[, "status_opinii"] <- ifelse(smartfony$liczba_opinii <= 50, smartfony$status_opinii, "50-100")
+> grid.table(smartfony)
+> smartfony[, "status_opinii"] <- ifelse(smartfony$liczba_opinii > 100, "więcej niż 100", smartfony$status_opinii)
+> grid.table(smartfony)
+> pie(table(smartfony$status_opinii))
+> smartfony$status_opinii <- factor(smartfony$status_opinii)
+> pie(table(smartfony$status_opinii))
+> paste(smartfony$nazwa, "ma ocenę klientów", smartfony$ocena, "bo ma liczbę opinii", smartfony$liczba_opinii)
+ [1] "Xiaomi Poco X3 PRO ma ocenę klientów 4 bo ma liczbę opinii 185"  
+ [2] "Samsung Galaxy S21 ma ocenę klientów 5 bo ma liczbę opinii 106"  
+ [3] "Samsung Galaxy M12 ma ocenę klientów 4.5 bo ma liczbę opinii 30" 
+ [4] "Samsung Galaxy M52 ma ocenę klientów 5 bo ma liczbę opinii 17"   
+ [5] "Xiaomi Redmi Note 10 ma ocenę klientów 5 bo ma liczbę opinii 19" 
+ [6] "Nokia G10 Dual Sim ma ocenę klientów 3.5 bo ma liczbę opinii 17" 
+ [7] "Xiaomi Redmi 10 ma ocenę klientów 3 bo ma liczbę opinii 14"      
+ [8] "OnePlus 8T ma ocenę klientów 5 bo ma liczbę opinii 108"          
+ [9] "realme 8 ma ocenę klientów 2 bo ma liczbę opinii 79"             
+[10] "Xiaomi Redmi Note 10S ma ocenę klientów 3 bo ma liczbę opinii 27"
+[11] "Alcatel 1S ma ocenę klientów 2 bo ma liczbę opinii 9"            
+[12] "Samsung Galaxy A32 ma ocenę klientów 5 bo ma liczbę opinii 38"   
+[13] "Xiaomi Poco M4 PRO ma ocenę klientów 5 bo ma liczbę opinii 8"    
+[14] "realme GT Master ma ocenę klientów 5 bo ma liczbę opinii 147"    
+[15] "vivo Y33s ma ocenę klientów 5 bo ma liczbę opinii 10"            
+> write.csv(smartfony, "smartfony_data.csv")
+> save.image("H:/ATH/Apu/LAB/LAB1/LAB1_R/LAB1_Workspace.RData")
