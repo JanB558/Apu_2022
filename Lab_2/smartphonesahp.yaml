@@ -1,0 +1,195 @@
+Version: 2.0
+
+################################
+# Alternatives Section
+#
+
+Alternatives: &alternatives
+  Xiaomi Poco X3 PRO:
+    wyswietlacz: 6.67
+    pamiec_RAM: 8
+    pamiec_wbudowana: 128
+    aparat_foto: 48
+    cena: 1399
+    liczba_opinii: 185
+    ocena: 4
+    status_opinii: więcej niż 100
+  Samsung Galaxy S21:
+    wyswietlacz: 6.2
+    pamiec_RAM: 8
+    pamiec_wbudowana: 64
+    aparat_foto: 12
+    cena: 2799
+    liczba_opinii: 106
+    ocena: 5
+    status_opinii: więcej niż 100
+  Samsung Galaxy M12:
+    wyswietlacz: 6.5
+    pamiec_RAM: 4
+    pamiec_wbudowana: 32
+    aparat_foto: 2
+    cena: 699
+    liczba_opinii: 30
+    ocena: 4.5
+    status_opinii: mniej niż 50
+  Samsung Galaxy M52:
+    wyswietlacz: 6.7
+    pamiec_RAM: 6
+    pamiec_wbudowana: 64
+    aparat_foto: 64
+    cena: 1399
+    liczba_opinii: 17
+    ocena: 5
+    status_opinii: mniej niż 50
+  Xiaomi Redmi Note 10:
+    wyswietlacz: 6.5
+    pamiec_RAM: 4
+    pamiec_wbudowana: 128
+    aparat_foto: 2
+    cena: 999
+    liczba_opinii: 19
+    ocena: 5
+    status_opinii: mniej niż 50
+  Nokia G10 Dual Sim:
+    wyswietlacz: 6.5
+    pamiec_RAM: 3
+    pamiec_wbudowana: 64
+    aparat_foto: 13
+    cena: 589
+    liczba_opinii: 17
+    ocena: 3.5
+    status_opinii: mniej niż 50
+  Xiaomi Redmi 10:
+    wyswietlacz: 6.5
+    pamiec_RAM: 4
+    pamiec_wbudowana: 64
+    aparat_foto: 50
+    cena: 799
+    liczba_opinii: 14
+    ocena: 3
+    status_opinii: mniej niż 50
+  OnePlus 8T:
+    wyswietlacz: 6.55
+    pamiec_RAM: 8
+    pamiec_wbudowana: 128
+    aparat_foto: 2
+    cena: 2099
+    liczba_opinii: 108
+    ocena: 5
+    status_opinii: więcej niż 100
+  realme 8:
+    wyswietlacz: 6.4
+    pamiec_RAM: 4
+    pamiec_wbudowana: 128
+    aparat_foto: 64
+    cena: 999
+    liczba_opinii: 79
+    ocena: 2
+    status_opinii: 50-100
+  Xiaomi Redmi Note 10S:
+    wyswietlacz: 6.43
+    pamiec_RAM: 6
+    pamiec_wbudowana: 128
+    aparat_foto: 2
+    cena: 1349
+    liczba_opinii: 27
+    ocena: 3
+    status_opinii: mniej niż 50
+  Alcatel 1S:
+    wyswietlacz: 6.52
+    pamiec_RAM: 3
+    pamiec_wbudowana: 32
+    aparat_foto: 13
+    cena: 449
+    liczba_opinii: 9
+    ocena: 2
+    status_opinii: mniej niż 50
+  Samsung Galaxy A32:
+    wyswietlacz: 6.4
+    pamiec_RAM: 4
+    pamiec_wbudowana: 128
+    aparat_foto: 5
+    cena: 1099
+    liczba_opinii: 38
+    ocena: 5
+    status_opinii: mniej niż 50
+  Xiaomi Poco M4 PRO:
+    wyswietlacz: 6.6
+    pamiec_RAM: 6
+    pamiec_wbudowana: 128
+    aparat_foto: 50
+    cena: 1199
+    liczba_opinii: 8
+    ocena: 5
+    status_opinii: mniej niż 50
+  realme GT Master:
+    wyswietlacz: 6.43
+    pamiec_RAM: 8
+    pamiec_wbudowana: 256
+    aparat_foto: 64
+    cena: 1599
+    liczba_opinii: 147
+    ocena: 5
+    status_opinii: więcej niż 100
+  vivo Y33s:
+    wyswietlacz: 6.58
+    pamiec_RAM: 8
+    pamiec_wbudowana: 128
+    aparat_foto: 50
+    cena: 999
+    liczba_opinii: 10
+    ocena: 5
+    status_opinii: mniej niż 50
+
+#
+# End of Alternatives Section
+################################
+
+################################
+# Goal Section
+#
+
+Goal:
+  name: Pick Smartphone
+  preferences:
+    pairwise:
+      - [Wydajnosc, Styl, 9] #wydajność ważna
+      - [Wydajnosc, Cena, 3] #wydajność ważna
+      - [Wydajnosc, Jakosc, 2] #wydajność ważna
+      - [Styl, Cena, 3] #styl ważniejszy
+      - [Jakosc, Cena, 2] #ważniejsza jakość
+  children:
+    Wydajnosc:
+      preferences:
+        pairwise:
+          - [pamiec_RAM, pamiec_wbudowana, 4]
+      children:
+        pamiec_RAM:
+          preferences:
+            pairwiseFunction:
+              function(a1, a2) min(9, max(1/9, a1$pamiec_RAM/a2$pamiec_RAM))
+          children: *alternatives
+        pamiec_wbudowana:
+          preferences:
+            pairwiseFunction:
+              function(a1, a2) min(9, max(1/9, a1$pamiec_wbudowana/a2$pamiec_wbudowana))
+          children: *alternatives
+    Jakosc:
+      preferences:
+        pairwiseFunction:
+          function(a1, a2) min(9, max(1/9, a1$wyswietlacz/a2$wyswietlacz))
+      children: *alternatives
+    Styl:
+      preferences:
+        pairwiseFunction:
+          function(a1, a2) min(9, max(1/9, a1$aparat_foto/a2$aparat_foto))
+      children: *alternatives
+    Cena:
+      preferences:
+        pairwiseFunction:
+          function(a1, a2) min(9, max(1/9, a1$cena/a2$cena))
+      children: *alternatives
+
+#
+# End of Goal Section
+################################
