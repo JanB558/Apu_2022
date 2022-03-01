@@ -1,0 +1,84 @@
+
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> setwd("H:/ATH/Apu/LAB/LAB4/Workspace")
+> #install.packages("C50")
+> library(C50)
+> smartphones <- read.csv("smartfony_data.csv")
+> smartdata <- data.frame(smartphones$wyswietlacz, smartphones$pamiec_RAM, smartphones$pamiec_wbudowana, smartphones$aparat_foto, smartphones$ocena)
+> #convert to factor
+> smartdata$smartphones.ocena <- as.factor(smartdata$smartphones.ocena)
+> smartdata$smartphones.wyswietlacz <- as.factor(smartdata$smartphones.wyswietlacz)
+> smartdata$smartphones.pamiec_RAM <- as.factor(smartdata$smartphones.pamiec_RAM)
+> smartdata$smartphones.pamiec_wbudowana <- as.factor(smartdata$smartphones.pamiec_wbudowana)
+> smartdata$smartphones.aparat_foto <- as.factor(smartdata$smartphones.aparat_foto)
+> #build model
+> #tree <- C5.0(smartphones.ocena ~ ., data = smartdata)
+> tree <- C5.0(x=smartdata[,-5], y=smartdata[,5])
+> summary(tree)
+
+Call:
+C5.0.default(x = smartdata[, -5], y = smartdata[, 5])
+
+
+C5.0 [Release 2.07 GPL Edition]  	Tue Mar 01 18:00:00 2022
+-------------------------------
+
+Class specified by attribute `outcome'
+
+Read 15 cases (5 attributes) from undefined.data
+
+Decision tree:
+ 5 (15/7)
+
+
+Evaluation on training data (15 cases):
+
+	    Decision Tree   
+	  ----------------  
+	  Size      Errors  
+
+	     1    7(46.7%)   <<
+
+
+	   (a)   (b)   (c)   (d)   (e)   (f)    <-classified as
+	  ----  ----  ----  ----  ----  ----
+	                                   2    (a): class 2
+	                                   2    (b): class 3
+	                                   1    (c): class 3.5
+	                                   1    (d): class 4
+	                                   1    (e): class 4.5
+	                                   8    (f): class 5
+
+
+Time: 0.0 secs
+
+> #plot
+> plot(tree)
+> #make predictions
+> table(predict(tree, newdata=smartdata), smartdata$smartphones.ocena)
+     
+      2 3 3.5 4 4.5 5
+  2   0 0   0 0   0 0
+  3   0 0   0 0   0 0
+  3.5 0 0   0 0   0 0
+  4   0 0   0 0   0 0
+  4.5 0 0   0 0   0 0
+  5   2 2   1 1   1 8
+> 
+> 
+> 
