@@ -1,0 +1,223 @@
+
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> setwd("G:/ATH/Apu/LAB/LAB5/Workspace")
+> #install.packages("mlr")
+> #install.packages("party")
+> #install.packages("dplyr")
+> library("dplyr")
+
+Dołączanie pakietu: ‘dplyr’
+
+Następujące obiekty zostały zakryte z ‘package:stats’:
+
+    filter, lag
+
+Następujące obiekty zostały zakryte z ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library("party")
+Ładowanie wymaganego pakietu: grid
+Ładowanie wymaganego pakietu: mvtnorm
+Ładowanie wymaganego pakietu: modeltools
+Ładowanie wymaganego pakietu: stats4
+Ładowanie wymaganego pakietu: strucchange
+Ładowanie wymaganego pakietu: zoo
+
+Dołączanie pakietu: ‘zoo’
+
+Następujące obiekty zostały zakryte z ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Ładowanie wymaganego pakietu: sandwich
+> library("mlr")
+Ładowanie wymaganego pakietu: ParamHelpers
+Warning message: 'mlr' is in 'maintenance-only' mode since July 2019. Future development will only
+happen in 'mlr3' (<https://mlr3.mlr-org.com>). Due to the focus on 'mlr3' there might be uncaught
+bugs meanwhile in {mlr} - please consider switching.
+> library("MASS")
+
+Dołączanie pakietu: ‘MASS’
+
+Następujący obiekt został zakryty z ‘package:dplyr’:
+
+    select
+
+> library("C50")
+> library("rpart")
+> train <- force(iris)
+> summarizeColumns(train)
+          name    type na     mean      disp median     mad  min  max nlevs
+1 Sepal.Length numeric  0 5.843333 0.8280661   5.80 1.03782  4.3  7.9     0
+2  Sepal.Width numeric  0 3.057333 0.4358663   3.00 0.44478  2.0  4.4     0
+3 Petal.Length numeric  0 3.758000 1.7652982   4.35 1.85325  1.0  6.9     0
+4  Petal.Width numeric  0 1.199333 0.7622377   1.30 1.03782  0.1  2.5     0
+5      Species  factor  0       NA 0.6666667     NA      NA 50.0 50.0     3
+> #podzial na dane testowe i treningowe
+> .data <- c("training", "test")
+> splitData <-  split(train, .data)
+> tree <- rpart(Species ~ ., splitData$training)
+> plot(tree)
+> tree
+n= 75 
+
+node), split, n, loss, yval, (yprob)
+      * denotes terminal node
+
+1) root 75 50 setosa (0.3333333 0.3333333 0.3333333)  
+  2) Petal.Length< 2.45 25  0 setosa (1.0000000 0.0000000 0.0000000) *
+  3) Petal.Length>=2.45 50 25 versicolor (0.0000000 0.5000000 0.5000000)  
+    6) Petal.Width< 1.65 25  1 versicolor (0.0000000 0.9600000 0.0400000) *
+    7) Petal.Width>=1.65 25  1 virginica (0.0000000 0.0400000 0.9600000) *
+> summary(tree)
+Call:
+rpart(formula = Species ~ ., data = splitData$training)
+  n= 75 
+
+    CP nsplit rel error xerror       xstd
+1 0.50      0      1.00   1.22 0.06748827
+2 0.46      1      0.50   0.88 0.08529166
+3 0.01      2      0.04   0.10 0.04320494
+
+Variable importance
+ Petal.Width Petal.Length Sepal.Length  Sepal.Width 
+          34           31           19           16 
+
+Node number 1: 75 observations,    complexity param=0.5
+  predicted class=setosa      expected loss=0.6666667  P(node) =1
+    class counts:    25    25    25
+   probabilities: 0.333 0.333 0.333 
+  left son=2 (25 obs) right son=3 (50 obs)
+  Primary splits:
+      Petal.Length < 2.45 to the left,  improve=25.00000, (0 missing)
+      Petal.Width  < 0.7  to the left,  improve=25.00000, (0 missing)
+      Sepal.Length < 5.45 to the left,  improve=15.81633, (0 missing)
+      Sepal.Width  < 3.35 to the right, improve=13.27273, (0 missing)
+  Surrogate splits:
+      Petal.Width  < 0.7  to the left,  agree=1.000, adj=1.00, (0 split)
+      Sepal.Length < 5.45 to the left,  agree=0.907, adj=0.72, (0 split)
+      Sepal.Width  < 3.35 to the right, agree=0.880, adj=0.64, (0 split)
+
+Node number 2: 25 observations
+  predicted class=setosa      expected loss=0  P(node) =0.3333333
+    class counts:    25     0     0
+   probabilities: 1.000 0.000 0.000 
+
+Node number 3: 50 observations,    complexity param=0.46
+  predicted class=versicolor  expected loss=0.5  P(node) =0.6666667
+    class counts:     0    25    25
+   probabilities: 0.000 0.500 0.500 
+  left son=6 (25 obs) right son=7 (25 obs)
+  Primary splits:
+      Petal.Width  < 1.65 to the left,  improve=21.160000, (0 missing)
+      Petal.Length < 4.95 to the left,  improve=19.642860, (0 missing)
+      Sepal.Length < 6.05 to the left,  improve= 5.135823, (0 missing)
+      Sepal.Width  < 2.95 to the left,  improve= 1.026273, (0 missing)
+  Surrogate splits:
+      Petal.Length < 4.75 to the left,  agree=0.90, adj=0.80, (0 split)
+      Sepal.Length < 6.15 to the left,  agree=0.70, adj=0.40, (0 split)
+      Sepal.Width  < 2.95 to the left,  agree=0.64, adj=0.28, (0 split)
+
+Node number 6: 25 observations
+  predicted class=versicolor  expected loss=0.04  P(node) =0.3333333
+    class counts:     0    24     1
+   probabilities: 0.000 0.960 0.040 
+
+Node number 7: 25 observations
+  predicted class=virginica   expected loss=0.04  P(node) =0.3333333
+    class counts:     0     1    24
+   probabilities: 0.000 0.040 0.960 
+
+> #C5.0
+> #na podstawie species
+> model <- C5.0(train[, -5], train[, 5], rules = TRUE)
+> model
+
+Call:
+C5.0.default(x = train[, -5], y = train[, 5], rules = TRUE)
+
+Rule-Based Model
+Number of samples: 150 
+Number of predictors: 4 
+
+Number of Rules: 4 
+
+Non-standard options: attempt to group attributes
+
+> summary(model)
+
+Call:
+C5.0.default(x = train[, -5], y = train[, 5], rules = TRUE)
+
+
+C5.0 [Release 2.07 GPL Edition]  	Thu Mar 03 17:51:53 2022
+-------------------------------
+
+Class specified by attribute `outcome'
+
+Read 150 cases (5 attributes) from undefined.data
+
+Rules:
+
+Rule 1: (50, lift 2.9)
+	Petal.Length <= 1.9
+	->  class setosa  [0.981]
+
+Rule 2: (48/1, lift 2.9)
+	Petal.Length > 1.9
+	Petal.Length <= 4.9
+	Petal.Width <= 1.7
+	->  class versicolor  [0.960]
+
+Rule 3: (46/1, lift 2.9)
+	Petal.Width > 1.7
+	->  class virginica  [0.958]
+
+Rule 4: (46/2, lift 2.8)
+	Petal.Length > 4.9
+	->  class virginica  [0.938]
+
+Default class: setosa
+
+
+Evaluation on training data (150 cases):
+
+	        Rules     
+	  ----------------
+	    No      Errors
+
+	     4    4( 2.7%)   <<
+
+
+	   (a)   (b)   (c)    <-classified as
+	  ----  ----  ----
+	    50                (a): class setosa
+	          47     3    (b): class versicolor
+	           1    49    (c): class virginica
+
+
+	Attribute usage:
+
+	 96.00%	Petal.Length
+	 62.67%	Petal.Width
+
+
+Time: 0.0 secs
+
+>

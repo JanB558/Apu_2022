@@ -1,0 +1,201 @@
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> setwd("G:/ATH/Apu/LAB/LAB5/Workspace")
+> #load packages
+> #install.packages("rFerns")
+> library("rFerns")
+> #install.packages("randomForestSRC")
+> library("randomForestSRC")
+
+ randomForestSRC 3.0.2 
+ 
+ Type rfsrc.news() to see new features, changes, and bug fixes. 
+ 
+
+> library("mlr")
+Ładowanie wymaganego pakietu: ParamHelpers
+Warning message: 'mlr' is in 'maintenance-only' mode since July 2019. Future development will only
+happen in 'mlr3' (<https://mlr3.mlr-org.com>). Due to the focus on 'mlr3' there might be uncaught
+bugs meanwhile in {mlr} - please consider switching.
+
+Dołączanie pakietu: ‘mlr’
+
+Następujące obiekty zostały zakryte z ‘package:randomForestSRC’:
+
+    impute, subsample
+
+> #load data
+> data <- read.csv("smartfony_data.csv")
+> data
+    X                 nazwa wyswietlacz pamiec_RAM pamiec_wbudowana aparat_foto cena liczba_opinii ocena
+1   1    Xiaomi Poco X3 PRO        6.67          8              128          48 1399           185   4.0
+2   2    Samsung Galaxy S21        6.20          8               64          12 2799           106   5.0
+3   3    Samsung Galaxy M12        6.50          4               32           2  699            30   4.5
+4   4    Samsung Galaxy M52        6.70          6               64          64 1399            17   5.0
+5   5  Xiaomi Redmi Note 10        6.50          4              128           2  999            19   5.0
+6   6    Nokia G10 Dual Sim        6.50          3               64          13  589            17   3.5
+7   7       Xiaomi Redmi 10        6.50          4               64          50  799            14   3.0
+8   8            OnePlus 8T        6.55          8              128           2 2099           108   5.0
+9   9              realme 8        6.40          4              128          64  999            79   2.0
+10 10 Xiaomi Redmi Note 10S        6.43          6              128           2 1349            27   3.0
+11 11            Alcatel 1S        6.52          3               32          13  449             9   2.0
+12 12    Samsung Galaxy A32        6.40          4              128           5 1099            38   5.0
+13 13    Xiaomi Poco M4 PRO        6.60          6              128          50 1199             8   5.0
+14 14      realme GT Master        6.43          8              256          64 1599           147   5.0
+15 15             vivo Y33s        6.58          8              128          50  999            10   5.0
+    status_opinii
+1  więcej niż 100
+2  więcej niż 100
+3    mniej niż 50
+4    mniej niż 50
+5    mniej niż 50
+6    mniej niż 50
+7    mniej niż 50
+8  więcej niż 100
+9          50-100
+10   mniej niż 50
+11   mniej niż 50
+12   mniej niż 50
+13   mniej niż 50
+14 więcej niż 100
+15   mniej niż 50
+> data <- data[3:9]
+> data
+   wyswietlacz pamiec_RAM pamiec_wbudowana aparat_foto cena liczba_opinii ocena
+1         6.67          8              128          48 1399           185   4.0
+2         6.20          8               64          12 2799           106   5.0
+3         6.50          4               32           2  699            30   4.5
+4         6.70          6               64          64 1399            17   5.0
+5         6.50          4              128           2  999            19   5.0
+6         6.50          3               64          13  589            17   3.5
+7         6.50          4               64          50  799            14   3.0
+8         6.55          8              128           2 2099           108   5.0
+9         6.40          4              128          64  999            79   2.0
+10        6.43          6              128           2 1349            27   3.0
+11        6.52          3               32          13  449             9   2.0
+12        6.40          4              128           5 1099            38   5.0
+13        6.60          6              128          50 1199             8   5.0
+14        6.43          8              256          64 1599           147   5.0
+15        6.58          8              128          50  999            10   5.0
+> data[, 7] <- factor(data[, 7])
+> #set task
+> task = makeClassifTask(
++   id = deparse(substitute(data)), 
++   data,                              
++   target = "ocena",                  
++   weights = NULL, 
++   blocking = NULL, 
++   coordinates = NULL,
++   positive = NA_character_,
++   fixup.data = "warn",
++   check.data = TRUE
++ )
+> # set teachers - check algorithms
+> lrns <- makeLearners(
++   c(
++     "lda",
++     "rpart",
++     "C50",
++     "rFerns",
++     "randomForestSRC"
++   ),
++   type = "classif"
++ )
+> #define test and run teachers
+> bench <- benchmark(
++   learners = lrns,
++   tasks = task,
++   resamplings = cv5
++ )
+Task: data, Learner: classif.lda
+Resampling: cross-validation
+Measures:             mmce      
+[Resample] iter 1:    1.0000000 
+[Resample] iter 2:    1.0000000 
+[Resample] iter 3:    1.0000000 
+[Resample] iter 4:    0.6666667 
+[Resample] iter 5:    0.6666667 
+
+
+Aggregated Result: mmce.test.mean=0.8666667
+
+
+Task: data, Learner: classif.rpart
+Resampling: cross-validation
+Measures:             mmce      
+[Resample] iter 1:    0.6666667 
+[Resample] iter 2:    0.6666667 
+[Resample] iter 3:    0.6666667 
+[Resample] iter 4:    0.3333333 
+[Resample] iter 5:    0.0000000 
+
+
+Aggregated Result: mmce.test.mean=0.4666667
+
+
+Task: data, Learner: classif.C50
+Resampling: cross-validation
+Measures:             mmce      
+[Resample] iter 1:    0.6666667 
+[Resample] iter 2:    0.6666667 
+[Resample] iter 3:    0.6666667 
+[Resample] iter 4:    0.3333333 
+[Resample] iter 5:    0.6666667 
+
+
+Aggregated Result: mmce.test.mean=0.6000000
+
+
+Task: data, Learner: classif.rFerns
+Resampling: cross-validation
+Measures:             mmce      
+[Resample] iter 1:    0.3333333 
+[Resample] iter 2:    0.6666667 
+[Resample] iter 3:    1.0000000 
+[Resample] iter 4:    1.0000000 
+[Resample] iter 5:    1.0000000 
+
+
+Aggregated Result: mmce.test.mean=0.8000000
+
+
+Task: data, Learner: classif.randomForestSRC
+Resampling: cross-validation
+Measures:             mmce      
+[Resample] iter 1:    0.6666667 
+[Resample] iter 2:    0.6666667 
+[Resample] iter 3:    0.6666667 
+[Resample] iter 4:    0.3333333 
+[Resample] iter 5:    0.6666667 
+
+
+Aggregated Result: mmce.test.mean=0.6000000
+
+
+Warning messages:
+1: In lda.default(x, grouping, ...) : grupa 2 jest pusta
+2: In lda.default(x, grouping, ...) : grupa 4.5 jest pusta
+3: In lda.default(x, grouping, ...) : grupy 3.5 4 są puste
+> #check results - mean - error rate
+> bench
+  task.id              learner.id mmce.test.mean
+1    data             classif.lda      0.8666667
+2    data           classif.rpart      0.4666667
+3    data             classif.C50      0.6000000
+4    data          classif.rFerns      0.8000000
+5    data classif.randomForestSRC      0.6000000
+>
